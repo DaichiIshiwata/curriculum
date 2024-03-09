@@ -1,0 +1,64 @@
+問1
+
+ルートブリッジに該当するスイッチ番号は3
+
+理由
+スイッチごとのブリッジプライオリティを比べたとき
+・Switch1：32769
+・Switch2：20481
+・Switch3：4097
+・Switch4：8193
+
+一番小さい値がSwitch3がルートブリッジである
+
+
+問2
+
+Switch1からSwitch3のポートがRP
+Switch1からSwitch2のポートがDP
+
+Switch2からSwitch1のポートがRP
+Switch2からSwitch4のポートがBP
+
+Switch3からSwitch1のポートがDP
+Switch3からSwitch4のポートがDP
+
+Switch4からSwitch2のポートがDP
+Switch4からSwitch3のポートがRP
+
+--ルートポートを考える--
+「F」のケーブルはコストが19
+「E」のケーブルはコストが100
+
+ルートパスコストが低い方がRPのため
+
+Switch1からルートブリッジであるSwitch3のへの2つの経路のルートパスコストを計算する
+	1.switch1-switch3:100
+	2.switch1-switch2-switch4:19+100+100 219
+そのためswitch1からswitch3がRPである
+
+Switch2からルートブリッジであるSwitch3への2つの経路をルートパスコストを計算する
+	1.switch2-switch1-switch3:19+100 119
+	2.switch2-switch4-switch3:100+100 200
+そのためswitch2からswitch1がRP
+
+Switch4からルートブリッジであるSwitch3への2つの経路をルートパスコストをを計算する
+	1.switch4-switch3:100
+	2.switch4-switch2-switch1:100+19+100 219
+そのためswitch4からswitch3がRP
+
+--指定ポートを考える--
+
+・ルートブリッジから出てるポートは指定ポートになるため
+
+Switch3から出ているポートはどちらもDPのため
+	switch3-switch4とswitch3-switch1がDP
+
+・ルートポートの向かいポートは指定ポートのため
+switch2からswitch1がRPのため　switch1からswitch2がDP
+
+・switch2-switch4には何も役割がないため、送信元のプライオリティが小さい方がDPになる
+そのためSwitch4からSwitch2がDP
+
+残りの一つが何も選出されなったポートのため
+switch2からswitch4がBPである
